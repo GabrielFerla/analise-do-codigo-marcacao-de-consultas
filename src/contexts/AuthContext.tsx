@@ -33,6 +33,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+   const updateUser = async (updatedUser: User) => {
+    try {
+      setUser(updatedUser);
+      await AsyncStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(updatedUser));
+    } catch (error) {
+      console.error('Erro ao atualizar usuário:', error);
+      throw error;
+    }
+  };
+
   const loadRegisteredUsers = async () => {
     try {
       await authService.loadRegisteredUsers();
@@ -75,7 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, register, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signIn, register, signOut, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

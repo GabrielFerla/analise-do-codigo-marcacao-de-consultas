@@ -11,6 +11,7 @@ import Header from '../components/Header';
 import DoctorList from '../components/DoctorList';
 import TimeSlotList from '../components/TimeSlotList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { notificationService } from '../services/notifications';
 
 type CreateAppointmentScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'CreateAppointment'>;
@@ -104,7 +105,10 @@ const CreateAppointmentScreen: React.FC = () => {
         specialty: selectedDoctor.specialty,
         status: 'pending',
       };
+      // Envia notificação para o médico
+      await notificationService.notifyNewAppointment(selectedDoctor.id, newAppointment);
 
+      
       // Adiciona nova consulta à lista
       appointments.push(newAppointment);
 
@@ -112,6 +116,8 @@ const CreateAppointmentScreen: React.FC = () => {
       await AsyncStorage.setItem('@MedicalApp:appointments', JSON.stringify(appointments));
 
       alert('Consulta agendada com sucesso!');
+
+
       navigation.goBack();
     } catch (err) {
       setError('Erro ao agendar consulta. Tente novamente.');
