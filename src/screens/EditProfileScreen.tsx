@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, ViewStyle, Alert } from 'react-native';
@@ -10,11 +11,14 @@ import theme from '../styles/theme';
 import Header from '../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// ====== TIPAGEM DE PROPS ======
 type EditProfileScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'EditProfile'>;
 };
 
+// ====== COMPONENTE PRINCIPAL ======
 const EditProfileScreen: React.FC = () => {
+  // ====== HOOKS E ESTADOS ======
   const { user, updateUser } = useAuth();
   const navigation = useNavigation<EditProfileScreenProps['navigation']>();
   

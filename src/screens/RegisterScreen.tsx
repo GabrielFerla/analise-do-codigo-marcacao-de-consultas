@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Input, Button, Text } from 'react-native-elements';
@@ -8,11 +9,14 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
 
+// ====== TIPAGEM DE PROPS ======
 type RegisterScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
 };
 
+// ====== COMPONENTE PRINCIPAL ======
 const RegisterScreen: React.FC = () => {
+  // ====== HOOKS E ESTADOS ======
   const { register } = useAuth();
   const navigation = useNavigation<RegisterScreenProps['navigation']>();
   const [name, setName] = useState('');
@@ -21,6 +25,7 @@ const RegisterScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // ====== FUNÇÃO DE REGISTRO ======
   const handleRegister = async () => {
     try {
       setLoading(true);
@@ -46,10 +51,12 @@ const RegisterScreen: React.FC = () => {
     }
   };
 
+  // ====== INTERFACE VISUAL ======
   return (
     <Container>
       <Title>Cadastro de Paciente</Title>
       
+      {/* ====== CAMPOS DE ENTRADA ====== */}
       <Input
         placeholder="Nome completo"
         value={name}
@@ -75,8 +82,7 @@ const RegisterScreen: React.FC = () => {
         containerStyle={styles.input}
       />
 
-      {error ? <ErrorText>{error}</ErrorText> : null}
-
+      {/* ====== BOTÕES DE AÇÃO ====== */}
       <Button
         title="Cadastrar"
         onPress={handleRegister}
@@ -95,6 +101,7 @@ const RegisterScreen: React.FC = () => {
   );
 };
 
+// ====== ESTILOS JAVASCRIPT ======
 const styles = {
   input: {
     marginBottom: 15,
@@ -117,6 +124,7 @@ const styles = {
   },
 };
 
+// ====== COMPONENTES STYLED ======
 const Container = styled.View`
   flex: 1;
   padding: 20px;

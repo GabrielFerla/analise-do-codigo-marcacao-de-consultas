@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { ScrollView, ViewStyle, TextStyle } from "react-native";
@@ -11,6 +12,7 @@ import theme from "../styles/theme";
 import Header from "../components/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// ====== TIPAGEM DE PROPS E INTERFACES ======
 type PatientDashboardScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "PatientDashboard">;
 };
@@ -31,6 +33,8 @@ interface StyledProps {
   status: string;
 }
 
+// ====== FUNÇÕES AUXILIARES ======
+// Função para definir cor do status da consulta
 const getStatusColor = (status: string) => {
   switch (status) {
     case "confirmed":
@@ -42,6 +46,7 @@ const getStatusColor = (status: string) => {
   }
 };
 
+// Função para traduzir texto do status da consulta
 const getStatusText = (status: string) => {
   switch (status) {
     case "confirmed":
@@ -53,12 +58,15 @@ const getStatusText = (status: string) => {
   }
 };
 
+// ====== COMPONENTE PRINCIPAL ======
 const PatientDashboardScreen: React.FC = () => {
+  // ====== HOOKS E ESTADOS ======
   const { user, signOut } = useAuth();
   const navigation = useNavigation<PatientDashboardScreenProps["navigation"]>();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // ====== FUNÇÃO PARA CARREGAR CONSULTAS ======
   const loadAppointments = async () => {
     try {
       const storedAppointments = await AsyncStorage.getItem(
@@ -74,10 +82,10 @@ const PatientDashboardScreen: React.FC = () => {
     } catch (error) {
       console.error("Erro ao carregar consultas:", error);
     } finally {
-      setLoading(false);
-    }
+      setLoading(false);    }
   };
 
+  // ====== EFEITO PARA RECARREGAR DADOS AO FOCAR NA TELA ======
   // Carrega as consultas quando a tela estiver em foco
   useFocusEffect(
     React.useCallback(() => {
@@ -85,12 +93,14 @@ const PatientDashboardScreen: React.FC = () => {
     }, [])
   );
 
+  // ====== INTERFACE VISUAL ======
   return (
     <Container>
       <Header />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Title>Minhas Consultas</Title>
 
+        {/* ====== BOTÕES DE NAVEGAÇÃO ====== */}
         <Button
           title="Agendar Nova Consulta"
           onPress={() => navigation.navigate("CreateAppointment")}
@@ -112,6 +122,7 @@ const PatientDashboardScreen: React.FC = () => {
           buttonStyle={styles.settingsButton}
         />
 
+        {/* ====== SEÇÃO DE CONSULTAS ====== */}
         {loading ? (
           <LoadingText>Carregando consultas...</LoadingText>
         ) : appointments.length === 0 ? (
@@ -138,10 +149,10 @@ const PatientDashboardScreen: React.FC = () => {
                   </StatusText>
                 </StatusBadge>
               </ListItem.Content>
-            </AppointmentCard>
-          ))
+            </AppointmentCard>          ))
         )}
 
+        {/* ====== BOTÃO DE LOGOUT ====== */}
         <Button
           title="Sair"
           onPress={signOut}
@@ -153,6 +164,7 @@ const PatientDashboardScreen: React.FC = () => {
   );
 };
 
+// ====== ESTILOS JAVASCRIPT ======
 const styles = {
   scrollContent: {
     padding: 20,
@@ -191,10 +203,10 @@ const styles = {
   patientName: {
     fontSize: 16,
     fontWeight: "700",
-    color: theme.colors.text,
-  },
+    color: theme.colors.text,  },
 };
 
+// ====== COMPONENTES STYLED ======
 const Container = styled.View`
   flex: 1;
   background-color: ${theme.colors.background};

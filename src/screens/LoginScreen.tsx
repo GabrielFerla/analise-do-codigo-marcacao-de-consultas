@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Input, Button, Text } from 'react-native-elements';
@@ -8,11 +9,14 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
 
+// ====== TIPAGEM DE PROPS ======
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>;
 };
 
+// ====== COMPONENTE PRINCIPAL ======
 const LoginScreen: React.FC = () => {
+  // ====== HOOKS E ESTADOS ======
   const { signIn } = useAuth();
   const navigation = useNavigation<LoginScreenProps['navigation']>();
   const [email, setEmail] = useState('');
@@ -20,6 +24,7 @@ const LoginScreen: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // ====== FUNÇÃO DE LOGIN ======
   const handleLogin = async () => {
     try {
       setLoading(true);
@@ -32,10 +37,12 @@ const LoginScreen: React.FC = () => {
     }
   };
 
+  // ====== INTERFACE VISUAL ======
   return (
     <Container>
       <Title>App Marcação de Consultas</Title>
       
+      {/* ====== CAMPOS DE ENTRADA ====== */}
       <Input
         placeholder="Email"
         value={email}
@@ -55,6 +62,7 @@ const LoginScreen: React.FC = () => {
 
       {error ? <ErrorText>{error}</ErrorText> : null}
 
+      {/* ====== BOTÕES DE AÇÃO ====== */}
       <Button
         title="Entrar"
         onPress={handleLogin}
@@ -70,6 +78,7 @@ const LoginScreen: React.FC = () => {
         buttonStyle={styles.registerButtonStyle}
       />
 
+      {/* ====== INFORMAÇÕES DE CREDENCIAIS ====== */}
       <Text style={styles.hint}>
         Use as credenciais de exemplo:
       </Text>
@@ -81,6 +90,7 @@ const LoginScreen: React.FC = () => {
   );
 };
 
+// ====== ESTILOS JAVASCRIPT ======
 const styles = {
   input: {
     marginBottom: 15,
@@ -114,6 +124,7 @@ const styles = {
   },
 };
 
+// ====== COMPONENTES STYLED ======
 const Container = styled.View`
   flex: 1;
   padding: 20px;

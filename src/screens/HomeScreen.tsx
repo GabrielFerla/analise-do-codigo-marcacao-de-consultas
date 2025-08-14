@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { FlatList, RefreshControl, TouchableOpacity } from 'react-native';
@@ -12,10 +13,12 @@ import { Doctor } from '../types/doctors';
 import { RootStackParamList } from '../types/navigation';
 import { useFocusEffect } from '@react-navigation/native';
 
+// ====== TIPAGEM DE PROPS ======
 type HomeScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
 };
 
+// ====== DADOS MOCK DOS MÉDICOS ======
 const doctors: Doctor[] = [
   {
     id: '1',

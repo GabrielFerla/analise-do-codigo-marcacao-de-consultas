@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React from 'react';
 import styled from 'styled-components/native';
 import { Button, ListItem } from 'react-native-elements';
@@ -9,14 +10,18 @@ import theme from '../styles/theme';
 import Header from '../components/Header';
 import { ViewStyle } from 'react-native';
 
+// ====== TIPAGEM DE PROPS ======
 type ProfileScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Profile'>;
 };
 
+// ====== COMPONENTE PRINCIPAL ======
 const ProfileScreen: React.FC = () => {
+  // ====== HOOKS ======
   const { user, signOut } = useAuth();
   const navigation = useNavigation<ProfileScreenProps['navigation']>();
 
+  // ====== FUNÇÃO AUXILIAR ======
   const getRoleText = (role: string) => {
     switch (role) {
       case 'admin':
@@ -27,15 +32,16 @@ const ProfileScreen: React.FC = () => {
         return 'Paciente';
       default:
         return role;
-    }
-  };
+    }  };
 
+  // ====== INTERFACE VISUAL ======
   return (
     <Container>
       <Header />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Title>Meu Perfil</Title>
 
+        {/* ====== INFORMAÇÕES DO USUÁRIO ====== */}
         <ProfileCard>
           <Avatar source={{ uri: user?.image || 'https://via.placeholder.com/150' }} />
           <Name>{user?.name}</Name>
@@ -49,6 +55,7 @@ const ProfileScreen: React.FC = () => {
           )}
         </ProfileCard>
 
+        {/* ====== BOTÕES DE AÇÃO ====== */}
         <Button
           title="Voltar"
           onPress={() => navigation.goBack()}
@@ -74,6 +81,7 @@ const ProfileScreen: React.FC = () => {
   );
 };
 
+// ====== ESTILOS JAVASCRIPT ======
 const styles = {
   scrollContent: {
     padding: 20,
@@ -96,6 +104,7 @@ const styles = {
   },
 };
 
+// ====== COMPONENTES STYLED ======
 const Container = styled.View`
   flex: 1;
   background-color: ${theme.colors.background};

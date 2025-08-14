@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, ViewStyle, Alert } from 'react-native';
@@ -11,11 +12,14 @@ import theme from '../styles/theme';
 import Header from '../components/Header';
 import { notificationService, Notification } from '../services/notifications';
 
+// ====== TIPAGEM DE PROPS ======
 type NotificationsScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Notifications'>;
 };
 
+// ====== COMPONENTE PRINCIPAL ======
 const NotificationsScreen: React.FC = () => {
+  // ====== HOOKS E ESTADOS ======
   const { user } = useAuth();
   const navigation = useNavigation<NotificationsScreenProps['navigation']>();
   const [notifications, setNotifications] = useState<Notification[]>([]);

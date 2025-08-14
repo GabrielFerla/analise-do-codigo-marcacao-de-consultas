@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, ViewStyle, Alert, Share } from 'react-native';
@@ -11,6 +12,7 @@ import theme from '../styles/theme';
 import Header from '../components/Header';
 import { storageService } from '../services/storage';
 
+// ====== TIPAGEM DE PROPS E INTERFACES ======
 type SettingsScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Settings'>;
 };
@@ -22,7 +24,9 @@ interface AppSettings {
   language: string;
 }
 
+// ====== COMPONENTE PRINCIPAL ======
 const SettingsScreen: React.FC = () => {
+  // ====== HOOKS E ESTADOS ======
   const { user, signOut } = useAuth();
   const navigation = useNavigation<SettingsScreenProps['navigation']>();
   const [settings, setSettings] = useState<AppSettings>({

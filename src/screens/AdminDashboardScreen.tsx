@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { ScrollView, ViewStyle, TextStyle } from 'react-native';
@@ -13,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import StatisticsCard from '../components/StatisticsCard';
 import { statisticsService, Statistics } from '../services/statistics';
 
+// ====== TIPAGEM DE PROPS E INTERFACES ======
 type AdminDashboardScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'AdminDashboard'>;
 };
@@ -39,6 +41,8 @@ interface StyledProps {
   status: string;
 }
 
+// ====== FUNÇÕES AUXILIARES ======
+// Função para definir cor do status da consulta
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'confirmed':
@@ -50,8 +54,7 @@ const getStatusColor = (status: string) => {
   }
 };
 
-
-
+// Função para traduzir texto do status da consulta
 const getStatusText = (status: string) => {
   switch (status) {
     case 'confirmed':
@@ -63,7 +66,9 @@ const getStatusText = (status: string) => {
   }
 };
 
+// ====== COMPONENTE PRINCIPAL ======
 const AdminDashboardScreen: React.FC = () => {
+  // ====== HOOKS E ESTADOS ======
   const { user, signOut } = useAuth();
   const navigation = useNavigation<AdminDashboardScreenProps['navigation']>();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -71,6 +76,7 @@ const AdminDashboardScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [statistics, setStatistics] = useState<Statistics | null>(null);
 
+  // ====== FUNÇÃO PARA CARREGAR DADOS ======
   const loadData = async () => {
     try {
       // Carrega consultas
@@ -95,7 +101,7 @@ const AdminDashboardScreen: React.FC = () => {
       setLoading(false);
     }
   };
-
+  // ====== EFEITO PARA RECARREGAR DADOS AO FOCAR NA TELA ======
   // Carrega os dados quando a tela estiver em foco
   useFocusEffect(
     React.useCallback(() => {
@@ -103,6 +109,7 @@ const AdminDashboardScreen: React.FC = () => {
     }, [])
   );
 
+  // ====== FUNÇÃO PARA ATUALIZAR STATUS DAS CONSULTAS ======
   const handleUpdateStatus = async (appointmentId: string, newStatus: 'confirmed' | 'cancelled') => {
     try {
       const storedAppointments = await AsyncStorage.getItem('@MedicalApp:appointments');
@@ -121,13 +128,14 @@ const AdminDashboardScreen: React.FC = () => {
       console.error('Erro ao atualizar status:', error);
     }
   };
-
+  // ====== INTERFACE VISUAL ======
   return (
     <Container>
       <Header />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Title>Painel Administrativo</Title>
 
+        {/* ====== BOTÕES DE NAVEGAÇÃO ====== */}
         <Button
           title="Gerenciar Usuários"
           onPress={() => navigation.navigate('UserManagement')}
@@ -142,6 +150,7 @@ const AdminDashboardScreen: React.FC = () => {
           buttonStyle={styles.buttonStyle}
         />
 
+        {/* ====== SEÇÃO DE ESTATÍSTICAS GERAIS ====== */}
         <SectionTitle>Estatísticas Gerais</SectionTitle>
         {statistics && (
           <StatisticsGrid>
@@ -172,6 +181,7 @@ const AdminDashboardScreen: React.FC = () => {
           </StatisticsGrid>
         )}
 
+        {/* ====== SEÇÃO DE ESPECIALIDADES MAIS PROCURADAS ====== */}
         <SectionTitle>Especialidades Mais Procuradas</SectionTitle>
         {statistics && Object.entries(statistics.specialties).length > 0 && (
           <SpecialtyContainer>
@@ -188,6 +198,7 @@ const AdminDashboardScreen: React.FC = () => {
           </SpecialtyContainer>
         )}
 
+        {/* ====== SEÇÃO DE ÚLTIMAS CONSULTAS ====== */}
         <SectionTitle>Últimas Consultas</SectionTitle>
         {loading ? (
           <LoadingText>Carregando dados...</LoadingText>
@@ -232,6 +243,7 @@ const AdminDashboardScreen: React.FC = () => {
           ))
         )}
 
+        {/* ====== BOTÃO DE LOGOUT ====== */}
         <Button
           title="Sair"
           onPress={signOut}
@@ -243,7 +255,7 @@ const AdminDashboardScreen: React.FC = () => {
   );
 };
 
-
+// ====== ESTILIZAÇÃO DOS COMPONENTES VISUAIS ======
 const StatisticsGrid = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
@@ -280,6 +292,8 @@ const SpecialtyCount = styled.Text`
   color: ${theme.colors.primary};
   font-weight: 600;
 `;
+
+// ====== ESTILOS JAVASCRIPT ======
 const styles = {
   scrollContent: {
     padding: 20,
@@ -325,6 +339,7 @@ const styles = {
   },
 };
 
+// ====== COMPONENTES STYLED ======
 const Container = styled.View`
   flex: 1;
   background-color: ${theme.colors.background};
