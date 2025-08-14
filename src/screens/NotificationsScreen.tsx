@@ -1,7 +1,7 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { ScrollView, ViewStyle, Alert } from "react-native";
+import { ScrollView, ViewStyle, Alert, StyleProp, TextStyle } from "react-native";
 import { Button, ListItem, Badge } from "react-native-elements";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
@@ -211,7 +211,7 @@ const styles = {
     fontSize: 16,
     fontWeight: "bold",
     color: theme.colors.text,
-  },
+  } as StyleProp<TextStyle>,
   message: {
     fontSize: 14,
     color: theme.colors.text,
@@ -259,12 +259,12 @@ const EmptyText = styled.Text`
 `;
 
 const NotificationCard = styled.View<{ isRead: boolean }>`
-  background-color: ${(props) =>
+  background-color: ${(props: { isRead: boolean }) =>
     props.isRead ? theme.colors.white : theme.colors.primary + "10"};
   border-radius: 8px;
   margin-bottom: 8px;
   border-width: 1px;
-  border-color: ${(props) =>
+  border-color: ${(props: { isRead: boolean }) =>
     props.isRead ? theme.colors.border : theme.colors.primary + "30"};
 `;
 

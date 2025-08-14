@@ -10,6 +10,7 @@ import { RootStackParamList } from "../types/navigation";
 import theme from "../styles/theme";
 import Header from "../components/Header";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Doctor } from "../types/doctors";
 
 // ====== TIPAGEM DE PROPS ======
 type EditProfileScreenProps = {
@@ -20,11 +21,12 @@ type EditProfileScreenProps = {
 const EditProfileScreen: React.FC = () => {
   // ====== HOOKS E ESTADOS ======
   const { user, updateUser } = useAuth();
+  const doctor = user as Doctor | null
   const navigation = useNavigation<EditProfileScreenProps["navigation"]>();
 
   const [name, setName] = useState(user?.name || "");
   const [email, setEmail] = useState(user?.email || "");
-  const [specialty, setSpecialty] = useState(user?.specialty || "");
+  const [specialty, setSpecialty] = useState(doctor?.specialty || "");
   const [loading, setLoading] = useState(false);
 
   const handleSaveProfile = async () => {

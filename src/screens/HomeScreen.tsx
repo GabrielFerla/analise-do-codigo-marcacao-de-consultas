@@ -4,7 +4,6 @@ import styled from "styled-components/native";
 import { FlatList, RefreshControl, TouchableOpacity } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { FontAwesome } from "@expo/vector-icons";
-import { HeaderContainer, HeaderTitle } from "../components/Header";
 import theme from "../styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -116,9 +115,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   return (
     <Container>
-      <HeaderContainer>
-        <HeaderTitle>Minhas Consultas</HeaderTitle>
-      </HeaderContainer>
+      
+      <Title>
+        Minhas Consultas
+      </Title>
 
       <Content>
         <Button
@@ -164,6 +164,14 @@ const Content = styled.View`
   padding: ${theme.spacing.medium}px;
 `;
 
+const Title = styled.Text`
+  font-size: 24px;
+  font-weight: bold;
+  color: ${theme.colors.text};
+  margin-bottom: 20px;
+  text-align: center;
+`;
+
 const AppointmentList = styled(FlatList)`
   flex: 1;
 `;
@@ -175,11 +183,6 @@ const AppointmentCard = styled.View`
   margin-bottom: ${theme.spacing.medium}px;
   flex-direction: row;
   align-items: center;
-  elevation: 2;
-  shadow-color: #000;
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
-  shadow-offset: 0px 2px;
 `;
 
 const DoctorImage = styled.Image`
