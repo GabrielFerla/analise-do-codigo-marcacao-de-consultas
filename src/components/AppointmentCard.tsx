@@ -1,9 +1,11 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React from 'react';
 import styled from 'styled-components/native';
 import { ViewStyle } from 'react-native';
 import { Card, Text, Avatar } from 'react-native-elements';
 import theme from '../styles/theme';
 
+// ====== TIPAGEM DAS PROPS ======
 interface AppointmentCardProps {
   doctorName: string;
   date: string;
@@ -14,6 +16,7 @@ interface AppointmentCardProps {
   style?: ViewStyle;
 }
 
+// ====== COMPONENTE PRINCIPAL ======
 const AppointmentCard: React.FC<AppointmentCardProps> = ({
   doctorName,
   date,
@@ -23,6 +26,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   onPress,
   style,
 }) => {
+  // Função para cor do status
   const getStatusColor = () => {
     switch (status) {
       case 'confirmed':
@@ -34,6 +38,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
     }
   };
 
+  // ====== INTERFACE VISUAL ======
   return (
     <Card containerStyle={[styles.card, style]}>
       <CardContent>
@@ -72,6 +77,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   );
 };
 
+// ====== ESTILIZAÇÃO DOS COMPONENTES VISUAIS ======
 const styles = {
   card: {
     borderRadius: 10,
@@ -122,7 +128,7 @@ const AppointmentInfo = styled.View`
 const InfoRow = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  marginBottom: 5px;
+  margin-bottom: 5px;
 `;
 
 const InfoLabel = styled.Text`
@@ -147,14 +153,14 @@ const StatusDot = styled.View<{ color: string }>`
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  background-color: ${props => props.color};
+  background-color: ${(props: { color: string }) => props.color};
   margin-right: 8px;
 `;
 
 const StatusText = styled.Text<{ color: string }>`
   font-size: 14px;
-  color: ${props => props.color};
+  color: ${(props: { color: string }) => props.color};
   font-weight: 500;
 `;
 
-export default AppointmentCard; 
+export default AppointmentCard;

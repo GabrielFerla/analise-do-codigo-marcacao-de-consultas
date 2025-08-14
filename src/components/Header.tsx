@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React from 'react';
 import styled from 'styled-components/native';
 import { Avatar } from 'react-native-elements';
@@ -5,12 +6,12 @@ import { useAuth } from '../contexts/AuthContext';
 import theme from '../styles/theme';
 import NotificationBell from './NotificationBell';
 
+// ====== COMPONENTE PRINCIPAL ======
 const Header: React.FC = () => {
   const { user } = useAuth();
-
   if (!user) return null;
-
-    return (
+  // ====== INTERFACE VISUAL ======
+  return (
     <Container>
       <UserInfo>
         <Avatar
@@ -29,13 +30,12 @@ const Header: React.FC = () => {
   );
 };
 
+// ====== ESTILIZAÇÃO DOS COMPONENTES VISUAIS ======
 const styles = {
   avatar: {
     backgroundColor: theme.colors.primary,
   },
 };
-
-
 
 const Container = styled.View`
   background-color: ${theme.colors.primary};

@@ -1,9 +1,11 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React from 'react';
 import styled from 'styled-components/native';
 import { Modal, ViewStyle } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import theme from '../styles/theme';
 
+// ====== TIPAGEM DAS PROPS ======
 interface AppointmentActionModalProps {
   visible: boolean;
   onClose: () => void;
@@ -18,6 +20,7 @@ interface AppointmentActionModalProps {
   };
 }
 
+// ====== COMPONENTE PRINCIPAL ======
 const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
   visible,
   onClose,
@@ -40,6 +43,7 @@ const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
 
   const isCancel = actionType === 'cancel';
 
+  // ====== INTERFACE VISUAL ======
   return (
     <Modal
       visible={visible}
@@ -120,6 +124,7 @@ const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
   );
 };
 
+// ====== ESTILIZAÇÃO DOS COMPONENTES VISUAIS ======
 const styles = {
   reasonInput: {
     marginBottom: 10,

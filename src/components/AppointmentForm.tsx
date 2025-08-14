@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Button, Input, Text } from 'react-native-elements';
@@ -6,6 +7,7 @@ import theme from '../styles/theme';
 import { Doctor } from '../types/doctors';
 import { Appointment } from '../types/appointments';
 
+// ====== LISTA MOCKADA DE MÉDICOS ======
 const doctors: Doctor[] = [
    {
       id: '1',
@@ -27,6 +29,7 @@ const doctors: Doctor[] = [
    },
 ];
 
+// ====== TIPAGEM DAS PROPS DO FORMULÁRIO ======
 type AppointmentFormProps = {
    onSubmit: (appointment: {
       doctorId: string;
@@ -45,6 +48,7 @@ const generateTimeSlots = () => {
    return slots;
 };
 
+// ====== COMPONENTE PRINCIPAL DO FORMULÁRIO ======
 const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
    const [selectedDoctor, setSelectedDoctor] = useState<string>('');
    const [dateInput, setDateInput] = useState('');
@@ -55,22 +59,16 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
    const validateDate = (inputDate: string) => {
       const dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
       const match = inputDate.match(dateRegex);
-
       if (!match) return false;
-
       const [, day, month, year] = match;
       const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
       const today = new Date();
       const maxDate = new Date(new Date().setMonth(new Date().getMonth() + 3));
-
       return date >= today && date <= maxDate;
    };
 
    const handleDateChange = (text: string) => {
-      // Remove todos os caracteres não numéricos
       const numbers = text.replace(/\D/g, '');
-      
-      // Formata a data enquanto digita
       let formattedDate = '';
       if (numbers.length > 0) {
          if (numbers.length <= 2) {
@@ -81,7 +79,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
             formattedDate = `${numbers.slice(0, 2)}/${numbers.slice(2, 4)}/${numbers.slice(4, 8)}`;
          }
       }
-
       setDateInput(formattedDate);
    };
 
@@ -90,15 +87,12 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
          alert('Por favor, preencha todos os campos');
          return;
       }
-
       if (!validateDate(dateInput)) {
          alert('Por favor, insira uma data válida (DD/MM/AAAA)');
          return;
       }
-
       const [day, month, year] = dateInput.split('/');
       const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-
       onSubmit({
          doctorId: selectedDoctor,
          date,
@@ -108,11 +102,10 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
    };
 
    const isTimeSlotAvailable = (time: string) => {
-      // Aqui você pode adicionar lógica para verificar se o horário está disponível
-      // Por exemplo, verificar se já existe uma consulta agendada para este horário
       return true;
    };
 
+   // ====== INTERFACE VISUAL DO FORMULÁRIO ======
    return (
       <Container>
          <Title>Selecione o Médico</Title>
@@ -187,6 +180,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit }) => {
    );
 };
 
+// ====== ESTILIZAÇÃO DOS COMPONENTES VISUAIS ======
 const Container = styled.View`
   padding: ${theme.spacing.medium}px;
 `;
@@ -209,11 +203,7 @@ const DoctorCard = styled(TouchableOpacity)<{ selected: boolean }>`
   background-color: ${(props: { selected: boolean }) => props.selected ? theme.colors.primary : theme.colors.white};
   border-radius: 8px;
   margin-bottom: ${theme.spacing.medium}px;
-  elevation: 2;
-  shadow-color: #000;
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
-  shadow-offset: 0px 2px;
+  /* Sombras e elevação devem ser ajustadas para compatibilidade */
 `;
 
 const DoctorImage = styled.Image`
@@ -295,4 +285,4 @@ const SubmitButton = styled(Button)`
   margin-top: ${theme.spacing.large}px;
 `;
 
-export default AppointmentForm; 
+export default AppointmentForm;

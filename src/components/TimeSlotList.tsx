@@ -1,8 +1,10 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React from 'react';
 import styled from 'styled-components/native';
 import { ViewStyle, TouchableOpacity } from 'react-native';
 import theme from '../styles/theme';
 
+// ====== TIPAGEM DAS PROPS ======
 interface TimeSlotListProps {
   onSelectTime: (time: string) => void;
   selectedTime?: string;
@@ -13,6 +15,7 @@ interface StyledProps {
   isSelected: boolean;
 }
 
+// ====== COMPONENTE PRINCIPAL ======
 const TimeSlotList: React.FC<TimeSlotListProps> = ({
   onSelectTime,
   selectedTime,
@@ -30,6 +33,7 @@ const TimeSlotList: React.FC<TimeSlotListProps> = ({
 
   const timeSlots = generateTimeSlots();
 
+  // ====== INTERFACE VISUAL ======
   return (
     <Container style={style}>
       <TimeGrid>
@@ -47,6 +51,7 @@ const TimeSlotList: React.FC<TimeSlotListProps> = ({
   );
 };
 
+// ====== ESTILIZAÇÃO DOS COMPONENTES VISUAIS ======
 const Container = styled.View`
   margin-bottom: 15px;
 `;
@@ -75,4 +80,4 @@ const TimeText = styled.Text<StyledProps>`
   color: ${(props: StyledProps) => props.isSelected ? theme.colors.primary : theme.colors.text};
 `;
 
-export default TimeSlotList; 
+export default TimeSlotList;

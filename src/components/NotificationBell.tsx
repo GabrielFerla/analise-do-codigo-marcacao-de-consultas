@@ -1,3 +1,4 @@
+// ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native';
 import { TouchableOpacity } from 'react-native';
@@ -7,14 +8,15 @@ import { useNavigation } from '@react-navigation/native';
 import { notificationService } from '../services/notifications';
 import theme from '../styles/theme';
 
+// ====== COMPONENTE PRINCIPAL ======
 const NotificationBell: React.FC = () => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const [unreadCount, setUnreadCount] = useState(0);
 
+  // Carrega o contador de notificações
   const loadUnreadCount = async () => {
     if (!user?.id) return;
-    
     try {
       const count = await notificationService.getUnreadCount(user.id);
       setUnreadCount(count);
@@ -25,10 +27,8 @@ const NotificationBell: React.FC = () => {
 
   useEffect(() => {
     loadUnreadCount();
-    
     // Recarrega o contador a cada 30 segundos
     const interval = setInterval(loadUnreadCount, 30000);
-    
     return () => clearInterval(interval);
   }, [user?.id]);
 
@@ -42,6 +42,7 @@ const NotificationBell: React.FC = () => {
     navigation.navigate('Notifications' as never);
   };
 
+  // ====== INTERFACE VISUAL ======
   return (
     <TouchableOpacity onPress={handlePress}>
       <BellContainer>
@@ -59,6 +60,7 @@ const NotificationBell: React.FC = () => {
   );
 };
 
+// ====== ESTILIZAÇÃO DOS COMPONENTES VISUAIS ======
 const styles = {
   badge: {
     position: 'absolute' as const,
