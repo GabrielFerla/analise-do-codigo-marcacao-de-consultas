@@ -41,8 +41,8 @@ interface StyledProps {
   status: string;
 }
 
-// ====== FUNÇÕES AUXILIARES ======
-// Função para definir cor do status da consulta
+//  ====== FUNÇÕES AUXILIARES ======
+//  Função para definir cor do status da consulta
 const getStatusColor = (status: string) => {
   switch (status) {
     case "confirmed":
@@ -54,10 +54,10 @@ const getStatusColor = (status: string) => {
   }
 };
 
-// Função para traduzir texto do status da consulta
+//  Função para traduzir texto do status da consulta
 const getStatusText = (status: string) => {
   switch (status) {
-    case "confirmed":
+    case "confirmed": 
       return "Confirmada";
     case "cancelled":
       return "Cancelada";
@@ -66,9 +66,9 @@ const getStatusText = (status: string) => {
   }
 };
 
-// ====== COMPONENTE PRINCIPAL ======
+//  ====== COMPONENTE PRINCIPAL ======
 const AdminDashboardScreen: React.FC = () => {
-  // ====== HOOKS E ESTADOS ======
+  //  ====== HOOKS E ESTADOS ======
   const { user, signOut } = useAuth();
   const navigation = useNavigation<AdminDashboardScreenProps["navigation"]>();
   const [appointments, setAppointments] = useState<Appointment[]>([]);

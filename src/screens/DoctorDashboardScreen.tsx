@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppointmentActionModal from "../components/AppointmentActionModal";
 import { notificationService } from "../services/notifications";
 
-// ====== TIPAGEM DE PROPS E INTERFACES ======
+//  ====== TIPAGEM DE PROPS E INTERFACES ======
 type DoctorDashboardScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "DoctorDashboard">;
 };
@@ -35,8 +35,8 @@ interface StyledProps {
   status: string;
 }
 
-// ====== FUNÇÕES AUXILIARES ======
-// Função para definir cor do status da consulta
+//  ====== FUNÇÕES AUXILIARES ======
+//  Função para definir cor do status da consulta
 const getStatusColor = (status: string) => {
   switch (status) {
     case "confirmed":
@@ -48,7 +48,7 @@ const getStatusColor = (status: string) => {
   }
 };
 
-// Função para traduzir texto do status da consulta
+//  Função para traduzir texto do status da consulta
 const getStatusText = (status: string) => {
   switch (status) {
     case "confirmed":
@@ -60,9 +60,9 @@ const getStatusText = (status: string) => {
   }
 };
 
-// ====== COMPONENTE PRINCIPAL ======
+//  ====== COMPONENTE PRINCIPAL ======
 const DoctorDashboardScreen: React.FC = () => {
-  // ====== HOOKS E ESTADOS ======
+  //  ====== HOOKS E ESTADOS ======
   const { user, signOut } = useAuth();
   const navigation = useNavigation<DoctorDashboardScreenProps["navigation"]>();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -72,7 +72,7 @@ const DoctorDashboardScreen: React.FC = () => {
     useState<Appointment | null>(null);
   const [actionType, setActionType] = useState<"confirm" | "cancel">("confirm");
 
-  // ====== FUNÇÃO PARA CARREGAR CONSULTAS ======
+  //  ====== FUNÇÃO PARA CARREGAR CONSULTAS ======
   const loadAppointments = async () => {
     try {
       const storedAppointments = await AsyncStorage.getItem(
@@ -130,7 +130,7 @@ const DoctorDashboardScreen: React.FC = () => {
           JSON.stringify(updatedAppointments)
         );
 
-        // Envia notificação para o paciente
+        //  Envia notificação para o paciente
         if (actionType === "confirm") {
           await notificationService.notifyAppointmentConfirmed(
             selectedAppointment.patientId,
@@ -144,14 +144,14 @@ const DoctorDashboardScreen: React.FC = () => {
           );
         }
 
-        loadAppointments(); // Recarrega a lista
+        loadAppointments();  // Recarrega a lista
       }
     } catch (error) {
       console.error("Erro ao atualizar status:", error);
     }
   };
 
-  // Carrega as consultas quando a tela estiver em foco
+  //  Carrega as consultas quando a tela estiver em foco
   useFocusEffect(
     React.useCallback(() => {
       loadAppointments();

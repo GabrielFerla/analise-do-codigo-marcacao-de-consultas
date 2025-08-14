@@ -45,7 +45,7 @@ export const statisticsService = {
         ? JSON.parse(registeredUsersData)
         : [];
 
-      // Estatísticas básicas
+      //  Estatísticas básicas
       const totalAppointments = appointments.length;
       const confirmedAppointments = appointments.filter(
         (a) => a.status === "confirmed"
