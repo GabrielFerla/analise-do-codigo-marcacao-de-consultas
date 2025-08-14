@@ -1,26 +1,26 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React, { useState } from 'react';
-import styled from 'styled-components/native';
-import { ScrollView, ViewStyle, Alert, Share } from 'react-native';
-import { Button, ListItem, Switch, Text } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useFocusEffect } from '@react-navigation/native';
-import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/theme';
-import Header from '../components/Header';
-import { storageService } from '../services/storage';
+import React, { useState } from "react";
+import styled from "styled-components/native";
+import { ScrollView, ViewStyle, Alert, Share } from "react-native";
+import { Button, ListItem, Switch, Text } from "react-native-elements";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useFocusEffect } from "@react-navigation/native";
+import { RootStackParamList } from "../types/navigation";
+import theme from "../styles/theme";
+import Header from "../components/Header";
+import { storageService } from "../services/storage";
 
 // ====== TIPAGEM DE PROPS E INTERFACES ======
 type SettingsScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Settings'>;
+  navigation: NativeStackNavigationProp<RootStackParamList, "Settings">;
 };
 
 interface AppSettings {
   notifications: boolean;
   autoBackup: boolean;
-  theme: 'light' | 'dark';
+  theme: "light" | "dark";
   language: string;
 }
 
@@ -28,12 +28,12 @@ interface AppSettings {
 const SettingsScreen: React.FC = () => {
   // ====== HOOKS E ESTADOS ======
   const { user, signOut } = useAuth();
-  const navigation = useNavigation<SettingsScreenProps['navigation']>();
+  const navigation = useNavigation<SettingsScreenProps["navigation"]>();
   const [settings, setSettings] = useState<AppSettings>({
     notifications: true,
     autoBackup: true,
-    theme: 'light',
-    language: 'pt-BR',
+    theme: "light",
+    language: "pt-BR",
   });
   const [loading, setLoading] = useState(true);
   const [storageInfo, setStorageInfo] = useState<any>(null);
@@ -42,11 +42,11 @@ const SettingsScreen: React.FC = () => {
     try {
       const appSettings = await storageService.getAppSettings();
       setSettings(appSettings);
-      
+
       const info = await storageService.getStorageInfo();
       setStorageInfo(info);
     } catch (error) {
-      console.error('Erro ao carregar configurações:', error);
+      console.error("Erro ao carregar configurações:", error);
     } finally {
       setLoading(false);
     }
@@ -64,8 +64,8 @@ const SettingsScreen: React.FC = () => {
       setSettings(updatedSettings);
       await storageService.updateAppSettings({ [key]: value });
     } catch (error) {
-      console.error('Erro ao atualizar configuração:', error);
-      Alert.alert('Erro', 'Não foi possível salvar a configuração');
+      console.error("Erro ao atualizar configuração:", error);
+      Alert.alert("Erro", "Não foi possível salvar a configuração");
     }
   };
 
@@ -73,18 +73,18 @@ const SettingsScreen: React.FC = () => {
     try {
       setLoading(true);
       const backup = await storageService.createBackup();
-      
-      const fileName = `backup_${new Date().toISOString().split('T')[0]}.json`;
-      
+
+      const fileName = `backup_${new Date().toISOString().split("T")[0]}.json`;
+
       await Share.share({
         message: backup,
         title: `Backup do App - ${fileName}`,
       });
-      
-      Alert.alert('Sucesso', 'Backup criado e compartilhado com sucesso!');
+
+      Alert.alert("Sucesso", "Backup criado e compartilhado com sucesso!");
     } catch (error) {
-      console.error('Erro ao criar backup:', error);
-      Alert.alert('Erro', 'Não foi possível criar o backup');
+      console.error("Erro ao criar backup:", error);
+      Alert.alert("Erro", "Não foi possível criar o backup");
     } finally {
       setLoading(false);
     }
@@ -92,20 +92,20 @@ const SettingsScreen: React.FC = () => {
 
   const handleClearCache = async () => {
     Alert.alert(
-      'Limpar Cache',
-      'Isso irá limpar o cache da aplicação. Tem certeza?',
+      "Limpar Cache",
+      "Isso irá limpar o cache da aplicação. Tem certeza?",
       [
-        { text: 'Cancelar', style: 'cancel' },
+        { text: "Cancelar", style: "cancel" },
         {
-          text: 'Limpar',
-          style: 'destructive',
+          text: "Limpar",
+          style: "destructive",
           onPress: async () => {
             try {
               storageService.clearCache();
               await loadSettings();
-              Alert.alert('Sucesso', 'Cache limpo com sucesso!');
+              Alert.alert("Sucesso", "Cache limpo com sucesso!");
             } catch (error) {
-              Alert.alert('Erro', 'Não foi possível limpar o cache');
+              Alert.alert("Erro", "Não foi possível limpar o cache");
             }
           },
         },
@@ -115,30 +115,32 @@ const SettingsScreen: React.FC = () => {
 
   const handleClearAllData = async () => {
     Alert.alert(
-      'Apagar Todos os Dados',
-      'ATENÇÃO: Isso irá apagar TODOS os dados da aplicação permanentemente. Esta ação não pode ser desfeita!',
+      "Apagar Todos os Dados",
+      "ATENÇÃO: Isso irá apagar TODOS os dados da aplicação permanentemente. Esta ação não pode ser desfeita!",
       [
-        { text: 'Cancelar', style: 'cancel' },
+        { text: "Cancelar", style: "cancel" },
         {
-          text: 'APAGAR TUDO',
-          style: 'destructive',
+          text: "APAGAR TUDO",
+          style: "destructive",
           onPress: async () => {
             Alert.alert(
-              'Confirmação Final',
-              'Tem certeza absoluta? Todos os dados serão perdidos!',
+              "Confirmação Final",
+              "Tem certeza absoluta? Todos os dados serão perdidos!",
               [
-                { text: 'Cancelar', style: 'cancel' },
+                { text: "Cancelar", style: "cancel" },
                 {
-                  text: 'SIM, APAGAR',
-                  style: 'destructive',
+                  text: "SIM, APAGAR",
+                  style: "destructive",
                   onPress: async () => {
                     try {
                       await storageService.clearAll();
-                      Alert.alert('Concluído', 'Todos os dados foram apagados. O app será reiniciado.', [
-                        { text: 'OK', onPress: () => signOut() }
-                      ]);
+                      Alert.alert(
+                        "Concluído",
+                        "Todos os dados foram apagados. O app será reiniciado.",
+                        [{ text: "OK", onPress: () => signOut() }]
+                      );
                     } catch (error) {
-                      Alert.alert('Erro', 'Não foi possível apagar os dados');
+                      Alert.alert("Erro", "Não foi possível apagar os dados");
                     }
                   },
                 },
@@ -176,20 +178,28 @@ const SettingsScreen: React.FC = () => {
             </ListItem.Content>
             <Switch
               value={settings.notifications}
-              onValueChange={(value) => updateSetting('notifications', value)}
-              trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+              onValueChange={(value) => updateSetting("notifications", value)}
+              trackColor={{
+                false: theme.colors.border,
+                true: theme.colors.primary,
+              }}
             />
           </ListItem>
 
           <ListItem>
             <ListItem.Content>
               <ListItem.Title>Backup Automático</ListItem.Title>
-              <ListItem.Subtitle>Criar backups automaticamente</ListItem.Subtitle>
+              <ListItem.Subtitle>
+                Criar backups automaticamente
+              </ListItem.Subtitle>
             </ListItem.Content>
             <Switch
               value={settings.autoBackup}
-              onValueChange={(value) => updateSetting('autoBackup', value)}
-              trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+              onValueChange={(value) => updateSetting("autoBackup", value)}
+              trackColor={{
+                false: theme.colors.border,
+                true: theme.colors.primary,
+              }}
             />
           </ListItem>
         </SettingsCard>
@@ -250,7 +260,7 @@ const styles = {
   },
   button: {
     marginBottom: 15,
-    width: '100%',
+    width: "100%",
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,

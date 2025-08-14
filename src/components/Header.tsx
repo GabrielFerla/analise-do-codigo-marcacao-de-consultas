@@ -1,10 +1,10 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React from 'react';
-import styled from 'styled-components/native';
-import { Avatar } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
-import theme from '../styles/theme';
-import NotificationBell from './NotificationBell';
+import React from "react";
+import styled from "styled-components/native";
+import { Avatar } from "react-native-elements";
+import { useAuth } from "../contexts/AuthContext";
+import theme from "../styles/theme";
+import NotificationBell from "./NotificationBell";
 
 // ====== COMPONENTE PRINCIPAL ======
 const Header: React.FC = () => {

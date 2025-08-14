@@ -1,38 +1,40 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React, { useState } from 'react';
-import styled from 'styled-components/native';
-import { ScrollView, ViewStyle, Alert, StyleProp, TextStyle } from 'react-native';
-import { Button, ListItem, Badge } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useFocusEffect } from '@react-navigation/native';
-import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/theme';
-import Header from '../components/Header';
-import { notificationService, Notification } from '../services/notifications';
+import React, { useState } from "react";
+import styled from "styled-components/native";
+import { ScrollView, ViewStyle, Alert, StyleProp, TextStyle } from "react-native";
+import { Button, ListItem, Badge } from "react-native-elements";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useFocusEffect } from "@react-navigation/native";
+import { RootStackParamList } from "../types/navigation";
+import theme from "../styles/theme";
+import Header from "../components/Header";
+import { notificationService, Notification } from "../services/notifications";
 
 // ====== TIPAGEM DE PROPS ======
 type NotificationsScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Notifications'>;
+  navigation: NativeStackNavigationProp<RootStackParamList, "Notifications">;
 };
 
 // ====== COMPONENTE PRINCIPAL ======
 const NotificationsScreen: React.FC = () => {
   // ====== HOOKS E ESTADOS ======
   const { user } = useAuth();
-  const navigation = useNavigation<NotificationsScreenProps['navigation']>();
+  const navigation = useNavigation<NotificationsScreenProps["navigation"]>();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
 
   const loadNotifications = async () => {
     if (!user?.id) return;
-    
+
     try {
-      const userNotifications = await notificationService.getNotifications(user.id);
+      const userNotifications = await notificationService.getNotifications(
+        user.id
+      );
       setNotifications(userNotifications);
     } catch (error) {
-      console.error('Erro ao carregar notificações:', error);
+      console.error("Erro ao carregar notificações:", error);
     } finally {
       setLoading(false);
     }
@@ -49,36 +51,36 @@ const NotificationsScreen: React.FC = () => {
       await notificationService.markAsRead(notificationId);
       loadNotifications();
     } catch (error) {
-      console.error('Erro ao marcar como lida:', error);
+      console.error("Erro ao marcar como lida:", error);
     }
   };
 
   const handleMarkAllAsRead = async () => {
     if (!user?.id) return;
-    
+
     try {
       await notificationService.markAllAsRead(user.id);
       loadNotifications();
     } catch (error) {
-      console.error('Erro ao marcar todas como lidas:', error);
+      console.error("Erro ao marcar todas como lidas:", error);
     }
   };
 
   const handleDeleteNotification = async (notificationId: string) => {
     Alert.alert(
-      'Excluir Notificação',
-      'Tem certeza que deseja excluir esta notificação?',
+      "Excluir Notificação",
+      "Tem certeza que deseja excluir esta notificação?",
       [
-        { text: 'Cancelar', style: 'cancel' },
+        { text: "Cancelar", style: "cancel" },
         {
-          text: 'Excluir',
-          style: 'destructive',
+          text: "Excluir",
+          style: "destructive",
           onPress: async () => {
             try {
               await notificationService.deleteNotification(notificationId);
               loadNotifications();
             } catch (error) {
-              console.error('Erro ao excluir notificação:', error);
+              console.error("Erro ao excluir notificação:", error);
             }
           },
         },
@@ -88,29 +90,29 @@ const NotificationsScreen: React.FC = () => {
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case 'appointment_confirmed':
-        return '✅';
-      case 'appointment_cancelled':
-        return '❌';
-      case 'appointment_reminder':
-        return '⏰';
+      case "appointment_confirmed":
+        return "✅";
+      case "appointment_cancelled":
+        return "❌";
+      case "appointment_reminder":
+        return "⏰";
       default:
-        return '📩';
+        return "📩";
     }
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    return date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   return (
     <Container>
@@ -153,10 +155,14 @@ const NotificationsScreen: React.FC = () => {
           notifications.map((notification) => (
             <NotificationCard key={notification.id} isRead={notification.read}>
               <ListItem
-                onPress={() => !notification.read && handleMarkAsRead(notification.id)}
+                onPress={() =>
+                  !notification.read && handleMarkAsRead(notification.id)
+                }
                 onLongPress={() => handleDeleteNotification(notification.id)}
               >
-                <NotificationIcon>{getNotificationIcon(notification.type)}</NotificationIcon>
+                <NotificationIcon>
+                  {getNotificationIcon(notification.type)}
+                </NotificationIcon>
                 <ListItem.Content>
                   <NotificationHeader>
                     <ListItem.Title style={styles.title}>
@@ -187,7 +193,7 @@ const styles = {
   },
   markAllButton: {
     marginBottom: 15,
-    width: '100%',
+    width: "100%",
   },
   markAllButtonStyle: {
     backgroundColor: theme.colors.success,
@@ -195,7 +201,7 @@ const styles = {
   },
   button: {
     marginBottom: 20,
-    width: '100%',
+    width: "100%",
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
@@ -203,7 +209,7 @@ const styles = {
   },
   title: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: theme.colors.text,
   } as StyleProp<TextStyle>,
   message: {
@@ -253,11 +259,13 @@ const EmptyText = styled.Text`
 `;
 
 const NotificationCard = styled.View<{ isRead: boolean }>`
-  background-color: ${(props: { isRead: boolean }) => props.isRead ? theme.colors.white : theme.colors.primary + '10'};
+  background-color: ${(props: { isRead: boolean }) =>
+    props.isRead ? theme.colors.white : theme.colors.primary + "10"};
   border-radius: 8px;
   margin-bottom: 8px;
   border-width: 1px;
-  border-color: ${(props: { isRead: boolean }) => props.isRead ? theme.colors.border : theme.colors.primary + '30'};
+  border-color: ${(props: { isRead: boolean }) =>
+    props.isRead ? theme.colors.border : theme.colors.primary + "30"};
 `;
 
 const NotificationIcon = styled.Text`

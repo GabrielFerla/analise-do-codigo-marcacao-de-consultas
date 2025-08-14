@@ -82,7 +82,8 @@ const PatientDashboardScreen: React.FC = () => {
     } catch (error) {
       console.error("Erro ao carregar consultas:", error);
     } finally {
-      setLoading(false);    }
+      setLoading(false);
+    }
   };
 
   // ====== EFEITO PARA RECARREGAR DADOS AO FOCAR NA TELA ======
@@ -149,7 +150,8 @@ const PatientDashboardScreen: React.FC = () => {
                   </StatusText>
                 </StatusBadge>
               </ListItem.Content>
-            </AppointmentCard>          ))
+            </AppointmentCard>
+          ))
         )}
 
         {/* ====== BOTÃO DE LOGOUT ====== */}
@@ -203,7 +205,8 @@ const styles = {
   patientName: {
     fontSize: 16,
     fontWeight: "700",
-    color: theme.colors.text,  },
+    color: theme.colors.text,
+  },
 };
 
 // ====== COMPONENTES STYLED ======

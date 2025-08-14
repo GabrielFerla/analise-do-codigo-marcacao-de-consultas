@@ -1,20 +1,20 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React, { useState } from 'react';
-import styled from 'styled-components/native';
-import { ScrollView, ViewStyle, Alert } from 'react-native';
-import { Button, Input } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/theme';
-import Header from '../components/Header';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Doctor } from '../types/doctors';
+import React, { useState } from "react";
+import styled from "styled-components/native";
+import { ScrollView, ViewStyle, Alert } from "react-native";
+import { Button, Input } from "react-native-elements";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types/navigation";
+import theme from "../styles/theme";
+import Header from "../components/Header";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Doctor } from "../types/doctors";
 
 // ====== TIPAGEM DE PROPS ======
 type EditProfileScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'EditProfile'>;
+  navigation: NativeStackNavigationProp<RootStackParamList, "EditProfile">;
 };
 
 // ====== COMPONENTE PRINCIPAL ======
@@ -22,11 +22,11 @@ const EditProfileScreen: React.FC = () => {
   // ====== HOOKS E ESTADOS ======
   const { user, updateUser } = useAuth();
   const doctor = user as Doctor | null
-  const navigation = useNavigation<EditProfileScreenProps['navigation']>();
-  
-  const [name, setName] = useState(user?.name || '');
-  const [email, setEmail] = useState(user?.email || '');
-  const [specialty, setSpecialty] = useState(doctor?.specialty || '');
+  const navigation = useNavigation<EditProfileScreenProps["navigation"]>();
+
+  const [name, setName] = useState(user?.name || "");
+  const [email, setEmail] = useState(user?.email || "");
+  const [specialty, setSpecialty] = useState(doctor?.specialty || "");
   const [loading, setLoading] = useState(false);
 
   const handleSaveProfile = async () => {
@@ -34,7 +34,7 @@ const EditProfileScreen: React.FC = () => {
       setLoading(true);
 
       if (!name.trim() || !email.trim()) {
-        Alert.alert('Erro', 'Nome e email são obrigatórios');
+        Alert.alert("Erro", "Nome e email são obrigatórios");
         return;
       }
 
@@ -42,22 +42,24 @@ const EditProfileScreen: React.FC = () => {
         ...user!,
         name: name.trim(),
         email: email.trim(),
-        ...(user?.role === 'doctor' && { specialty: specialty.trim() }),
+        ...(user?.role === "doctor" && { specialty: specialty.trim() }),
       };
 
       // Atualiza no Context
       await updateUser(updatedUser);
 
       // Salva no AsyncStorage
-      await AsyncStorage.setItem('@MedicalApp:user', JSON.stringify(updatedUser));
+      await AsyncStorage.setItem(
+        "@MedicalApp:user",
+        JSON.stringify(updatedUser)
+      );
 
-      Alert.alert('Sucesso', 'Perfil atualizado com sucesso!', [
-        { text: 'OK', onPress: () => navigation.goBack() }
+      Alert.alert("Sucesso", "Perfil atualizado com sucesso!", [
+        { text: "OK", onPress: () => navigation.goBack() },
       ]);
-
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível atualizar o perfil');
-      console.error('Erro ao atualizar perfil:', error);
+      Alert.alert("Erro", "Não foi possível atualizar o perfil");
+      console.error("Erro ao atualizar perfil:", error);
     } finally {
       setLoading(false);
     }
@@ -70,8 +72,10 @@ const EditProfileScreen: React.FC = () => {
         <Title>Editar Perfil</Title>
 
         <ProfileCard>
-          <Avatar source={{ uri: user?.image || 'https://via.placeholder.com/150' }} />
-          
+          <Avatar
+            source={{ uri: user?.image || "https://via.placeholder.com/150" }}
+          />
+
           <Input
             label="Nome"
             value={name}
@@ -90,7 +94,7 @@ const EditProfileScreen: React.FC = () => {
             autoCapitalize="none"
           />
 
-          {user?.role === 'doctor' && (
+          {user?.role === "doctor" && (
             <Input
               label="Especialidade"
               value={specialty}
@@ -100,8 +104,14 @@ const EditProfileScreen: React.FC = () => {
             />
           )}
 
-          <RoleBadge role={user?.role || ''}>
-            <RoleText>{user?.role === 'admin' ? 'Administrador' : user?.role === 'doctor' ? 'Médico' : 'Paciente'}</RoleText>
+          <RoleBadge role={user?.role || ""}>
+            <RoleText>
+              {user?.role === "admin"
+                ? "Administrador"
+                : user?.role === "doctor"
+                ? "Médico"
+                : "Paciente"}
+            </RoleText>
           </RoleBadge>
         </ProfileCard>
 
@@ -133,7 +143,7 @@ const styles = {
   },
   button: {
     marginBottom: 15,
-    width: '100%',
+    width: "100%",
   },
   saveButton: {
     backgroundColor: theme.colors.success,
@@ -178,12 +188,12 @@ const Avatar = styled.Image`
 const RoleBadge = styled.View<{ role: string }>`
   background-color: ${(props: { role: string }) => {
     switch (props.role) {
-      case 'admin':
-        return theme.colors.primary + '20';
-      case 'doctor':
-        return theme.colors.success + '20';
+      case "admin":
+        return theme.colors.primary + "20";
+      case "doctor":
+        return theme.colors.success + "20";
       default:
-        return theme.colors.secondary + '20';
+        return theme.colors.secondary + "20";
     }
   }};
   padding: 8px 16px;
