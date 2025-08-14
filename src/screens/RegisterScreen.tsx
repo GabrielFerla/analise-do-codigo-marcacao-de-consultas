@@ -1,38 +1,38 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React, { useState } from 'react';
-import styled from 'styled-components/native';
-import { Input, Button, Text } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
-import theme from '../styles/theme';
-import { ViewStyle } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
+import React, { useState } from "react";
+import styled from "styled-components/native";
+import { Input, Button, Text } from "react-native-elements";
+import { useAuth } from "../contexts/AuthContext";
+import theme from "../styles/theme";
+import { ViewStyle } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types/navigation";
 
 // ====== TIPAGEM DE PROPS ======
 type RegisterScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
+  navigation: NativeStackNavigationProp<RootStackParamList, "Register">;
 };
 
 // ====== COMPONENTE PRINCIPAL ======
 const RegisterScreen: React.FC = () => {
   // ====== HOOKS E ESTADOS ======
   const { register } = useAuth();
-  const navigation = useNavigation<RegisterScreenProps['navigation']>();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const navigation = useNavigation<RegisterScreenProps["navigation"]>();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // ====== FUNÇÃO DE REGISTRO ======
   const handleRegister = async () => {
     try {
       setLoading(true);
-      setError('');
+      setError("");
 
       if (!name || !email || !password) {
-        setError('Por favor, preencha todos os campos');
+        setError("Por favor, preencha todos os campos");
         return;
       }
 
@@ -43,9 +43,9 @@ const RegisterScreen: React.FC = () => {
       });
 
       // Após o registro bem-sucedido, navega para o login
-      navigation.navigate('Login');
+      navigation.navigate("Login");
     } catch (err) {
-      setError('Erro ao criar conta. Tente novamente.');
+      setError("Erro ao criar conta. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -55,7 +55,7 @@ const RegisterScreen: React.FC = () => {
   return (
     <Container>
       <Title>Cadastro de Paciente</Title>
-      
+
       {/* ====== CAMPOS DE ENTRADA ====== */}
       <Input
         placeholder="Nome completo"
@@ -93,7 +93,7 @@ const RegisterScreen: React.FC = () => {
 
       <Button
         title="Voltar para Login"
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => navigation.navigate("Login")}
         containerStyle={styles.backButton as ViewStyle}
         buttonStyle={styles.backButtonStyle}
       />
@@ -108,7 +108,7 @@ const styles = {
   },
   button: {
     marginTop: 10,
-    width: '100%',
+    width: "100%",
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
@@ -116,7 +116,7 @@ const styles = {
   },
   backButton: {
     marginTop: 10,
-    width: '100%',
+    width: "100%",
   },
   backButtonStyle: {
     backgroundColor: theme.colors.secondary,
@@ -146,4 +146,4 @@ const ErrorText = styled.Text`
   margin-bottom: 10px;
 `;
 
-export default RegisterScreen; 
+export default RegisterScreen;
