@@ -1,12 +1,12 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components/native';
-import { TouchableOpacity } from 'react-native';
-import { Badge } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigation } from '@react-navigation/native';
-import { notificationService } from '../services/notifications';
-import theme from '../styles/theme';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components/native";
+import { TouchableOpacity } from "react-native";
+import { Badge } from "react-native-elements";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+import { notificationService } from "../services/notifications";
+import theme from "../styles/theme";
 
 // ====== COMPONENTE PRINCIPAL ======
 const NotificationBell: React.FC = () => {
@@ -21,7 +21,7 @@ const NotificationBell: React.FC = () => {
       const count = await notificationService.getUnreadCount(user.id);
       setUnreadCount(count);
     } catch (error) {
-      console.error('Erro ao carregar contador de notificações:', error);
+      console.error("Erro ao carregar contador de notificações:", error);
     }
   };
 
@@ -34,12 +34,12 @@ const NotificationBell: React.FC = () => {
 
   // Atualiza quando a tela volta ao foco
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', loadUnreadCount);
+    const unsubscribe = navigation.addListener("focus", loadUnreadCount);
     return unsubscribe;
   }, [navigation, user?.id]);
 
   const handlePress = () => {
-    navigation.navigate('Notifications' as never);
+    navigation.navigate("Notifications" as never);
   };
 
   // ====== INTERFACE VISUAL ======
@@ -49,7 +49,7 @@ const NotificationBell: React.FC = () => {
         <BellIcon>🔔</BellIcon>
         {unreadCount > 0 && (
           <Badge
-            value={unreadCount > 99 ? '99+' : unreadCount.toString()}
+            value={unreadCount > 99 ? "99+" : unreadCount.toString()}
             status="error"
             containerStyle={styles.badge}
             textStyle={styles.badgeText}
@@ -63,7 +63,7 @@ const NotificationBell: React.FC = () => {
 // ====== ESTILIZAÇÃO DOS COMPONENTES VISUAIS ======
 const styles = {
   badge: {
-    position: 'absolute' as const,
+    position: "absolute" as const,
     top: -8,
     right: -8,
   },

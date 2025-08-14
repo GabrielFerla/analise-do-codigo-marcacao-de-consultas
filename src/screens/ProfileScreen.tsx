@@ -1,38 +1,39 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React from 'react';
-import styled from 'styled-components/native';
-import { Button, ListItem } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
-import theme from '../styles/theme';
-import Header from '../components/Header';
-import { ViewStyle } from 'react-native';
+import React from "react";
+import styled from "styled-components/native";
+import { Button, ListItem } from "react-native-elements";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types/navigation";
+import theme from "../styles/theme";
+import Header from "../components/Header";
+import { ViewStyle } from "react-native";
 
 // ====== TIPAGEM DE PROPS ======
 type ProfileScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Profile'>;
+  navigation: NativeStackNavigationProp<RootStackParamList, "Profile">;
 };
 
 // ====== COMPONENTE PRINCIPAL ======
 const ProfileScreen: React.FC = () => {
   // ====== HOOKS ======
   const { user, signOut } = useAuth();
-  const navigation = useNavigation<ProfileScreenProps['navigation']>();
+  const navigation = useNavigation<ProfileScreenProps["navigation"]>();
 
   // ====== FUNÇÃO AUXILIAR ======
   const getRoleText = (role: string) => {
     switch (role) {
-      case 'admin':
-        return 'Administrador';
-      case 'doctor':
-        return 'Médico';
-      case 'patient':
-        return 'Paciente';
+      case "admin":
+        return "Administrador";
+      case "doctor":
+        return "Médico";
+      case "patient":
+        return "Paciente";
       default:
         return role;
-    }  };
+    }
+  };
 
   // ====== INTERFACE VISUAL ======
   return (
@@ -43,14 +44,16 @@ const ProfileScreen: React.FC = () => {
 
         {/* ====== INFORMAÇÕES DO USUÁRIO ====== */}
         <ProfileCard>
-          <Avatar source={{ uri: user?.image || 'https://via.placeholder.com/150' }} />
+          <Avatar
+            source={{ uri: user?.image || "https://via.placeholder.com/150" }}
+          />
           <Name>{user?.name}</Name>
           <Email>{user?.email}</Email>
-          <RoleBadge role={user?.role || ''}>
-            <RoleText>{getRoleText(user?.role || '')}</RoleText>
+          <RoleBadge role={user?.role || ""}>
+            <RoleText>{getRoleText(user?.role || "")}</RoleText>
           </RoleBadge>
-          
-          {user?.role === 'doctor' && (
+
+          {user?.role === "doctor" && (
             <SpecialtyText>Especialidade: {user?.specialty}</SpecialtyText>
           )}
         </ProfileCard>
@@ -63,9 +66,9 @@ const ProfileScreen: React.FC = () => {
           buttonStyle={styles.buttonStyle}
         />
 
-         <Button
+        <Button
           title="Editar Perfil"
-          onPress={() => navigation.navigate('EditProfile' as any)}
+          onPress={() => navigation.navigate("EditProfile" as any)}
           containerStyle={styles.button as ViewStyle}
           buttonStyle={styles.editButton}
         />
@@ -88,7 +91,7 @@ const styles = {
   },
   button: {
     marginBottom: 20,
-    width: '100%',
+    width: "100%",
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
@@ -98,7 +101,7 @@ const styles = {
     backgroundColor: theme.colors.error,
     paddingVertical: 12,
   },
-   editButton: {
+  editButton: {
     backgroundColor: theme.colors.success,
     paddingVertical: 12,
   },
@@ -155,12 +158,12 @@ const Email = styled.Text`
 const RoleBadge = styled.View<{ role: string }>`
   background-color: ${(props: { role: string }) => {
     switch (props.role) {
-      case 'admin':
-        return theme.colors.primary + '20';
-      case 'doctor':
-        return theme.colors.success + '20';
+      case "admin":
+        return theme.colors.primary + "20";
+      case "doctor":
+        return theme.colors.success + "20";
       default:
-        return theme.colors.secondary + '20';
+        return theme.colors.secondary + "20";
     }
   }};
   padding: 4px 12px;

@@ -1,16 +1,16 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React from 'react';
-import styled from 'styled-components/native';
-import { Modal, ViewStyle } from 'react-native';
-import { Button, Input } from 'react-native-elements';
-import theme from '../styles/theme';
+import React from "react";
+import styled from "styled-components/native";
+import { Modal, ViewStyle } from "react-native";
+import { Button, Input } from "react-native-elements";
+import theme from "../styles/theme";
 
 // ====== TIPAGEM DAS PROPS ======
 interface AppointmentActionModalProps {
   visible: boolean;
   onClose: () => void;
   onConfirm: (reason?: string) => void;
-  actionType: 'confirm' | 'cancel';
+  actionType: "confirm" | "cancel";
   appointmentDetails: {
     patientName: string;
     doctorName: string;
@@ -28,20 +28,20 @@ const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
   actionType,
   appointmentDetails,
 }) => {
-  const [reason, setReason] = React.useState('');
+  const [reason, setReason] = React.useState("");
 
   const handleConfirm = () => {
     onConfirm(reason.trim() || undefined);
-    setReason('');
+    setReason("");
     onClose();
   };
 
   const handleClose = () => {
-    setReason('');
+    setReason("");
     onClose();
   };
 
-  const isCancel = actionType === 'cancel';
+  const isCancel = actionType === "cancel";
 
   // ====== INTERFACE VISUAL ======
   return (
@@ -55,7 +55,7 @@ const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
         <ModalContainer>
           <Header>
             <Title>
-              {isCancel ? 'Cancelar Consulta' : 'Confirmar Consulta'}
+              {isCancel ? "Cancelar Consulta" : "Confirmar Consulta"}
             </Title>
           </Header>
 
@@ -75,7 +75,9 @@ const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
               </InfoRow>
               <InfoRow>
                 <InfoLabel>Data/Hora:</InfoLabel>
-                <InfoValue>{appointmentDetails.date} às {appointmentDetails.time}</InfoValue>
+                <InfoValue>
+                  {appointmentDetails.date} às {appointmentDetails.time}
+                </InfoValue>
               </InfoRow>
             </AppointmentInfo>
 
@@ -94,10 +96,9 @@ const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
             )}
 
             <ConfirmationText isCancel={isCancel}>
-              {isCancel 
-                ? 'Tem certeza que deseja cancelar esta consulta?'
-                : 'Tem certeza que deseja confirmar esta consulta?'
-              }
+              {isCancel
+                ? "Tem certeza que deseja cancelar esta consulta?"
+                : "Tem certeza que deseja confirmar esta consulta?"}
             </ConfirmationText>
           </Content>
 
@@ -109,12 +110,16 @@ const AppointmentActionModal: React.FC<AppointmentActionModalProps> = ({
               buttonStyle={styles.cancelButtonStyle}
             />
             <Button
-              title={isCancel ? 'Confirmar Cancelamento' : 'Confirmar'}
+              title={isCancel ? "Confirmar Cancelamento" : "Confirmar"}
               onPress={handleConfirm}
               containerStyle={styles.confirmButton as ViewStyle}
               buttonStyle={[
                 styles.confirmButtonStyle,
-                { backgroundColor: isCancel ? theme.colors.error : theme.colors.success }
+                {
+                  backgroundColor: isCancel
+                    ? theme.colors.error
+                    : theme.colors.success,
+                },
               ]}
             />
           </ButtonContainer>
@@ -216,7 +221,8 @@ const ReasonContainer = styled.View`
 
 const ConfirmationText = styled.Text<{ isCancel: boolean }>`
   font-size: 16px;
-  color: ${(props: { isCancel: boolean }) => props.isCancel ? theme.colors.error : theme.colors.success};
+  color: ${(props: { isCancel: boolean }) =>
+    props.isCancel ? theme.colors.error : theme.colors.success};
   text-align: center;
   margin-bottom: 20px;
   font-weight: 500;

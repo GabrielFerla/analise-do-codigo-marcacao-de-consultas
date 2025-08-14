@@ -1,9 +1,9 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React from 'react';
-import styled from 'styled-components/native';
-import { ViewStyle } from 'react-native';
-import { Card, Text, Avatar } from 'react-native-elements';
-import theme from '../styles/theme';
+import React from "react";
+import styled from "styled-components/native";
+import { ViewStyle } from "react-native";
+import { Card, Text, Avatar } from "react-native-elements";
+import theme from "../styles/theme";
 
 // ====== TIPAGEM DAS PROPS ======
 interface AppointmentCardProps {
@@ -11,7 +11,7 @@ interface AppointmentCardProps {
   date: string;
   time: string;
   specialty: string;
-  status: 'pending' | 'confirmed' | 'cancelled';
+  status: "pending" | "confirmed" | "cancelled";
   onPress?: () => void;
   style?: ViewStyle;
 }
@@ -29,9 +29,9 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   // Função para cor do status
   const getStatusColor = () => {
     switch (status) {
-      case 'confirmed':
+      case "confirmed":
         return theme.colors.success;
-      case 'cancelled':
+      case "cancelled":
         return theme.colors.error;
       default:
         return theme.colors.primary;
@@ -46,7 +46,11 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
           <Avatar
             size="medium"
             rounded
-            source={{ uri: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 10)}.jpg` }}
+            source={{
+              uri: `https://randomuser.me/api/portraits/men/${Math.floor(
+                Math.random() * 10
+              )}.jpg`,
+            }}
             containerStyle={styles.avatar}
           />
           <TextContainer>
@@ -69,7 +73,11 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
         <StatusContainer>
           <StatusDot color={getStatusColor()} />
           <StatusText color={getStatusColor()}>
-            {status === 'confirmed' ? 'Confirmada' : status === 'cancelled' ? 'Cancelada' : 'Pendente'}
+            {status === "confirmed"
+              ? "Confirmada"
+              : status === "cancelled"
+              ? "Cancelada"
+              : "Pendente"}
           </StatusText>
         </StatusContainer>
       </CardContent>
@@ -85,7 +93,7 @@ const styles = {
     marginVertical: 8,
     padding: 15,
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,

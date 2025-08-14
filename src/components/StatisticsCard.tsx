@@ -1,8 +1,8 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React from 'react';
-import styled from 'styled-components/native';
-import { ViewStyle } from 'react-native';
-import theme from '../styles/theme';
+import React from "react";
+import styled from "styled-components/native";
+import { ViewStyle } from "react-native";
+import theme from "../styles/theme";
 
 // ====== TIPAGEM DAS PROPS ======
 interface StatisticsCardProps {

@@ -1,37 +1,37 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React, { useState } from 'react';
-import styled from 'styled-components/native';
-import { Input, Button, Text } from 'react-native-elements';
-import { useAuth } from '../contexts/AuthContext';
-import theme from '../styles/theme';
-import { ViewStyle } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigation';
+import React, { useState } from "react";
+import styled from "styled-components/native";
+import { Input, Button, Text } from "react-native-elements";
+import { useAuth } from "../contexts/AuthContext";
+import theme from "../styles/theme";
+import { ViewStyle } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types/navigation";
 
 // ====== TIPAGEM DE PROPS ======
 type LoginScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>;
+  navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
 };
 
 // ====== COMPONENTE PRINCIPAL ======
 const LoginScreen: React.FC = () => {
   // ====== HOOKS E ESTADOS ======
   const { signIn } = useAuth();
-  const navigation = useNavigation<LoginScreenProps['navigation']>();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const navigation = useNavigation<LoginScreenProps["navigation"]>();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // ====== FUNÇÃO DE LOGIN ======
   const handleLogin = async () => {
     try {
       setLoading(true);
-      setError('');
+      setError("");
       await signIn({ email, password });
     } catch (err) {
-      setError('Email ou senha inválidos');
+      setError("Email ou senha inválidos");
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ const LoginScreen: React.FC = () => {
   return (
     <Container>
       <Title>App Marcação de Consultas</Title>
-      
+
       {/* ====== CAMPOS DE ENTRADA ====== */}
       <Input
         placeholder="Email"
@@ -73,17 +73,15 @@ const LoginScreen: React.FC = () => {
 
       <Button
         title="Cadastrar Novo Paciente"
-        onPress={() => navigation.navigate('Register')}
+        onPress={() => navigation.navigate("Register")}
         containerStyle={styles.registerButton as ViewStyle}
         buttonStyle={styles.registerButtonStyle}
       />
 
       {/* ====== INFORMAÇÕES DE CREDENCIAIS ====== */}
-      <Text style={styles.hint}>
-        Use as credenciais de exemplo:
-      </Text>
+      <Text style={styles.hint}>Use as credenciais de exemplo:</Text>
       <Text style={styles.credentials}>
-        Admin: admin@example.com / 123456{'\n'}
+        Admin: admin@example.com / 123456{"\n"}
         Médicos: joao@example.com, maria@example.com, pedro@example.com / 123456
       </Text>
     </Container>
@@ -97,7 +95,7 @@ const styles = {
   },
   button: {
     marginTop: 10,
-    width: '100%',
+    width: "100%",
   },
   buttonStyle: {
     backgroundColor: theme.colors.primary,
@@ -105,7 +103,7 @@ const styles = {
   },
   registerButton: {
     marginTop: 10,
-    width: '100%',
+    width: "100%",
   },
   registerButtonStyle: {
     backgroundColor: theme.colors.secondary,
@@ -113,12 +111,12 @@ const styles = {
   },
   hint: {
     marginTop: 20,
-    textAlign: 'center' as const,
+    textAlign: "center" as const,
     color: theme.colors.text,
   },
   credentials: {
     marginTop: 10,
-    textAlign: 'center' as const,
+    textAlign: "center" as const,
     color: theme.colors.text,
     fontSize: 12,
   },
@@ -146,4 +144,4 @@ const ErrorText = styled.Text`
   margin-bottom: 10px;
 `;
 
-export default LoginScreen; 
+export default LoginScreen;

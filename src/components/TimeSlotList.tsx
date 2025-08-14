@@ -1,8 +1,8 @@
 // ====== IMPORTS DE DEPENDÊNCIAS E TIPOS ======
-import React from 'react';
-import styled from 'styled-components/native';
-import { ViewStyle, TouchableOpacity } from 'react-native';
-import theme from '../styles/theme';
+import React from "react";
+import styled from "styled-components/native";
+import { ViewStyle, TouchableOpacity } from "react-native";
+import theme from "../styles/theme";
 
 // ====== TIPAGEM DAS PROPS ======
 interface TimeSlotListProps {
@@ -25,8 +25,8 @@ const TimeSlotList: React.FC<TimeSlotListProps> = ({
   const generateTimeSlots = () => {
     const slots: string[] = [];
     for (let hour = 9; hour < 18; hour++) {
-      slots.push(`${hour.toString().padStart(2, '0')}:00`);
-      slots.push(`${hour.toString().padStart(2, '0')}:30`);
+      slots.push(`${hour.toString().padStart(2, "0")}:00`);
+      slots.push(`${hour.toString().padStart(2, "0")}:30`);
     }
     return slots;
   };
@@ -67,9 +67,11 @@ const TimeCard = styled(TouchableOpacity)<StyledProps>`
   width: 23%;
   padding: 8px;
   border-radius: 6px;
-  background-color: ${(props: StyledProps) => props.isSelected ? theme.colors.primary + '20' : theme.colors.background};
+  background-color: ${(props: StyledProps) =>
+    props.isSelected ? theme.colors.primary + "20" : theme.colors.background};
   border-width: 1px;
-  border-color: ${(props: StyledProps) => props.isSelected ? theme.colors.primary : theme.colors.border};
+  border-color: ${(props: StyledProps) =>
+    props.isSelected ? theme.colors.primary : theme.colors.border};
   align-items: center;
   justify-content: center;
 `;
@@ -77,7 +79,8 @@ const TimeCard = styled(TouchableOpacity)<StyledProps>`
 const TimeText = styled.Text<StyledProps>`
   font-size: 12px;
   font-weight: 500;
-  color: ${(props: StyledProps) => props.isSelected ? theme.colors.primary : theme.colors.text};
+  color: ${(props: StyledProps) =>
+    props.isSelected ? theme.colors.primary : theme.colors.text};
 `;
 
 export default TimeSlotList;
