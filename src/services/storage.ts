@@ -10,10 +10,10 @@ interface CacheItem<T> {
   expiry?: number;
 }
 
-// Cache em memória para melhor performance
+//  Cache em memória para melhor performance
 const cache = new Map<string, CacheItem<any>>();
 
-// Chaves de armazenamento centralizadas
+//  Chaves de armazenamento centralizadas
 export const STORAGE_KEYS = {
   USER: "@MedicalApp:user",
   TOKEN: "@MedicalApp:token",
@@ -25,7 +25,7 @@ export const STORAGE_KEYS = {
 } as const;
 
 export const storageService = {
-  // Operações básicas com cache
+  //  Operações básicas com cache
   async setItem<T>(
     key: string,
     value: T,
@@ -35,7 +35,7 @@ export const storageService = {
       const serializedValue = JSON.stringify(value);
       await AsyncStorage.setItem(key, serializedValue);
 
-      // Atualiza o cache
+      //  Atualiza o cache
       const cacheItem: CacheItem<T> = {
         data: value,
         timestamp: Date.now(),
@@ -52,23 +52,23 @@ export const storageService = {
 
   async getItem<T>(key: string, defaultValue?: T): Promise<T | null> {
     try {
-      // Verifica se existe no cache e se não expirou
+      //  Verifica se existe no cache e se não expirou
       const cached = cache.get(key);
       if (cached) {
         if (!cached.expiry || cached.expiry > Date.now()) {
           return cached.data as T;
         } else {
-          // Remove do cache se expirou
+          //  Remove do cache se expirou
           cache.delete(key);
         }
       }
 
-      // Busca no AsyncStorage
+      //  Busca no AsyncStorage
       const stored = await AsyncStorage.getItem(key);
       if (stored) {
         const parsed = JSON.parse(stored) as T;
 
-        // Adiciona ao cache
+        //  Adiciona ao cache
         cache.set(key, {
           data: parsed,
           timestamp: Date.now(),
@@ -104,7 +104,7 @@ export const storageService = {
     }
   },
 
-  // Backup e restore
+  //  Backup e restore
   async createBackup(): Promise<string> {
     try {
       const backup = {
@@ -154,12 +154,12 @@ export const storageService = {
     }
   },
 
-  // Limpeza de cache
+  //  Limpeza de cache
   clearCache(): void {
     cache.clear();
   },
 
-  // Informações de armazenamento
+  //  Informações de armazenamento
   async getStorageInfo(): Promise<{
     cacheSize: number;
     totalKeys: number;
@@ -179,7 +179,7 @@ export const storageService = {
     };
   },
 
-  // Configurações da aplicação
+  //  Configurações da aplicação
   async getAppSettings(): Promise<any> {
     return await this.getItem(STORAGE_KEYS.APP_SETTINGS, {
       theme: "light",
