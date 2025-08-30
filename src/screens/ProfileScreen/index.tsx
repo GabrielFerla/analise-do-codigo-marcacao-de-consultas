@@ -16,7 +16,7 @@ const ProfileScreen: React.FC = () => {
       <Header />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Title>Meu Perfil</Title>
-        <ProfileCard user={user} />
+        {user && <ProfileCard user={user} />}
         <Button
           title="Voltar"
           onPress={() => navigation.goBack()}
