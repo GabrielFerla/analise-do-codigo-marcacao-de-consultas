@@ -1,20 +1,31 @@
 import React from "react";
+import { User } from "../../../types/auth";
 import {
-  ProfileCardContainer,
   Avatar,
-  Name,
   Email,
+  Name,
+  ProfileCardContainer,
   RoleBadge,
   RoleText,
   SpecialtyText,
 } from "../styles";
-import { getRoleText } from "../services/roleService";
-import { User } from "../../../types/auth";
 
 type ProfileCardProps = {
   user: User;
 };
 
+const getRoleText = (role: string) => {
+  switch (role as User["role"]) {
+    case "admin":
+      return "Administrador";
+    case "doctor":
+      return "Médico";
+    case "patient":
+      return "Paciente";
+    default:
+      return role;
+  }
+};
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ user }) => (
   <ProfileCardContainer>

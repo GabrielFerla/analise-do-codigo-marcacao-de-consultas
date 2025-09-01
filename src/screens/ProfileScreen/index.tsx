@@ -1,15 +1,18 @@
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import { Button } from "react-native-elements";
 import { ViewStyle } from "react-native";
+import { Button } from "react-native-elements";
 import Header from "../../components/Header";
-import { useProfileAuth } from "./hooks/useProfileAuth";
-import { useProfileNavigation } from "./hooks/useProfileNavigation";
-import { Container, ScrollView, Title, styles } from "./styles";
+import { useAuth } from "../../contexts/AuthContext";
+import { RootStackParamList } from "../../types/navigation";
 import ProfileCard from "./components/ProfileCard";
+import { Container, ScrollView, Title, styles } from "./styles";
 
-const ProfileScreen: React.FC = () => {
-  const { user, signOut } = useProfileAuth();
-  const navigation = useProfileNavigation();
+export const ProfileScreen: React.FC = () => {
+  const { user, signOut } = useAuth();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, "Profile">>();
+ 
 
   return (
     <Container>
@@ -39,5 +42,3 @@ const ProfileScreen: React.FC = () => {
     </Container>
   );
 };
-
-export default ProfileScreen;
