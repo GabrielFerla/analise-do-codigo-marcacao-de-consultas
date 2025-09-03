@@ -9,7 +9,7 @@ import { RootStackParamList } from "../../types/navigation";
 import ProfileCard from "./components/ProfileCard";
 import { Container, ScrollView, Title, styles } from "./styles";
 
-export const ProfileScreen: React.FC = () => {
+const ProfileScreen: React.FC = () => {
   const { user, signOut } = useAuth();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, "Profile">>();
  
@@ -42,3 +42,5 @@ export const ProfileScreen: React.FC = () => {
     </Container>
   );
 };
+
+export default ProfileScreen;
